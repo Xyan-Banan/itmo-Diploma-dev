@@ -1,0 +1,36 @@
+.field {
+    background-color: antiquewhite;
+    border: 2px dashed brown;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 650px;
+    padding: 15px;
+    margin-left: 15px;
+}
+table {
+    border: 4px solid black;
+    margin: 20px;
+    font-size: 16pt;
+    font-family:"Comic Sans MS", cursive, sans-serif;
+    border-radius: 10px;
+}
+td {
+    padding: 5px;
+    border: 2px solid black;
+}
+.variants {
+    font-size: 16pt;
+}
+
+.backButton {
+    width: 30px;
+    height: 500px;
+    background-color: blanchedalmond;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+}

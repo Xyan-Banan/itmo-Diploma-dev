@@ -1,0 +1,22 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Создание практики</title>
+        <link rel="stylesheet" href="{% static "/css/themes.css" %}">  <!-- here need to use static dir for css -->
+    </head>
+    <body style = "background-image: url({% static '/img/main_bg.jpg'%}) ">
+        <form class="field">
+                <div class="variants">Количество вариантов</div><br>
+                <input type="number" placeholder="0">
+            <table> <!-- here create cycle making table rows with themes from database -->
+                <tr>
+                    <td><label for="1">Первая тема</label></td>
+                    <td><input type="number" width="30px" placeholder="0"></td>
+                </tr>
+            </table>
+            <input type="submit" value="Создать">
+        </form>
+    </body>
+</html>
