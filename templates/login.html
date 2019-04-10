@@ -1,0 +1,18 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static "/css/main.css" %}">
+        <link rel="stylesheet" href="{% static "/css/login.css" %}">
+    </head>
+    <body>
+        <form class="main_box" method="post">
+            Hello world!<br><br>
+            
+            <input type="text" placeholder="login" name="login"><br>
+            <input type="password" placeholder="password" name="password"><br>
+            <input type="submit" value="LOG IN" id="login_button">
+        </form>
+    </body>
+</html>

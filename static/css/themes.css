@@ -29,8 +29,3 @@ td {
     height: 500px;
     background-color: blanchedalmond;
 }
-
-body {
-    display: flex;
-    justify-content: center;
-}

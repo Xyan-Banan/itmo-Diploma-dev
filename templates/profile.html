@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>profile</title>
+        <link rel="stylesheet" href="{% static "/css/main.css" %}">
+        <link rel="stylesheet" href="{% static "/css/profile.css" %}">
+    </head>
+    <body>
+        <div class="main_box">
+            <div class="profile_info">
+                <div id="fioInfo">
+                    <p>
+                        {{profile.name}} {{profile.sername}} {% if profile.patronymic %} {{profile.patronymic}} {% endif %}
+                    </p>
+                </div>
+                {% if profile.status == "student"%}
+                    <div>группа <span>Y2434</span> вариант <span>10</span></div>
+                {% endif %}
+            </div>
+            <div class="buttons">
+                <div>
+                    <form>
+                        <select class="link">
+                            <option>...</option>
+                            <option>2434</option>
+                            <option>2434</option>
+                            <option>2434</option>
+                            <option>2434</option>
+                        </select>
+                        <div class="buttons">
+                            <button type="submit" formaction="../journal.html" class="link">Журнал</button>
+                            <button type="submit" formaction="../theme_form/themes.html"  class="link">Практики</button>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <a href="../theme_form/themes.html">
+                        <div class="link img"><img src="{% static "/img/instruments.png" %}" alt="instruments" height="50"></div>
+                        <div class="link">Создать практику</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,18 @@
+.main_box {
+    background-color: antiquewhite;
+    border: 2px dashed brown;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+body {
+    background-image: url(../img/main_bg.jpg);
+    display: flex;
+    justify-content: center;
+    margin: 0px;
+    padding: 0px;
+}

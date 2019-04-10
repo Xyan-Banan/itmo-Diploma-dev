@@ -1,0 +1,19 @@
+
+body {
+    align-items: center;
+}
+
+.main_box {
+    position: absolute;
+    top: 30%;
+}
+
+input {
+    font-size: 20px;
+    padding: 5px;
+    margin: 5px 10px;
+}
+#login_button {
+    font-size: 15px;
+    margin: 0px;
+}
