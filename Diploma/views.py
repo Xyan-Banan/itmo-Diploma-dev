@@ -1,19 +1,16 @@
-from django             import template
-from django.http        import HttpResponse
+from django.shortcuts   import render
 
 def themes(request):     #request is object, that contains sessions, cookies, get, post and so on
-    
-    my_template = template.loader.get_template('themes.html')
-    return HttpResponse(my_template.render())    #any view must return response type value
+    # here need to get all themes from DB and put their names in array
+    # then send this array as context to template
+    return render(request,'themes.html')    #any view must return response type value; the render shortcut returns response
 
 def login(request):
-
-    my_template = template.loader.get_template('login.html')
-    return HttpResponse(my_template.render())
+    return render(request,'login.html')
 
 def profile(request):
 
-    my_template = template.loader.get_template('profile.html')
+    
 
     class Profile:
         name = ''
@@ -27,10 +24,8 @@ def profile(request):
             self.patronymic = patronymic
             self.status = status
 
-    my_profile = Profile ('John','Romero','','student')
+    my_profile = Profile ('John','Romero','Иванович','teacher')
+    context = {'profile':my_profile}
+    
+    return render(request,'profile.html',context)
 
-    c = template.Context({'profile':my_profile})
-
-    return HttpResponse(my_template.render({'profile':my_profile}))
-
-# Create your views here.

@@ -1,25 +1,30 @@
-{% load static %}
-
 <!DOCTYPE HTML>
 <html>
     <head>
         <title>profile</title>
-        <link rel="stylesheet" href="{% static "/css/main.css" %}">
-        <link rel="stylesheet" href="{% static "/css/profile.css" %}">
+        <link rel="stylesheet" href="../css/main.css">
+        <link rel="stylesheet" href="../css/profile.css">
     </head>
     <body>
         <div class="main_box">
             <div class="profile_info">
                 <div id="fioInfo">
                     <p>
-                        {{profile.name}} {{profile.sername}} {% if profile.patronymic %} {{profile.patronymic}} {% endif %}
+                        <span>Иванов</span> <span>Иван</span> <span>Иванович</span>
                     </p>
                 </div>
-                {% if profile.status == "student"%}
-                    <div>группа <span>Y2434</span> вариант <span>10</span></div>
-                {% endif %}
+<!--
+                <div>
+                        группа <span>Y2434</span> вариант <span>10</span>
+                </div>
+-->
             </div>
-            {% if profile.status == "teacher"%}
+<!--
+            <div class="buttons">
+                <a href="profile.html"><div class="link">Зачетка</div></a>
+                <a href="profile.html"><div class="link">Мои практики</div></a>
+            </div>
+-->
             <div class="buttons">
                 <div>
                     <form>
@@ -32,18 +37,17 @@
                         </select>
                         <div class="buttons">
                             <button type="submit" formaction="../journal.html" class="link">Журнал</button>
-                            <button type="submit" formaction="./create_practice"  class="link">Практики</button>
+                            <button type="submit" formaction="../theme_form/themes.html"  class="link">Практики</button>
                         </div>
                     </form>
                 </div>
                 <div>
-                    <a href="./create_practice">
-                        <div class="link img"><img src="{% static "/img/instruments.png" %}" alt="instruments" height="50"></div>
+                    <a href="../theme_form/themes.html">
+                        <div class="link img"><img src="../img/instruments.png" alt="instruments" height="50"></div>
                         <div class="link">Создать практику</div>
                     </a>
                 </div>
             </div>
-            {% endif %}
         </div>
     </body>
 </html>

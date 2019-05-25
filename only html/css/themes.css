@@ -1,14 +1,3 @@
-.field {
-    background-color: antiquewhite;
-    border: 2px dashed brown;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 650px;
-    padding: 15px;
-    margin-left: 15px;
-}
 table {
     border: 4px solid black;
     margin: 20px;
@@ -29,3 +18,4 @@ td {
     height: 500px;
     background-color: blanchedalmond;
 }
+
