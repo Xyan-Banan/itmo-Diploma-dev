@@ -8,16 +8,22 @@
         <link rel="stylesheet" href="{% static "/css/themes.css" %}">  <!-- here need to use static dir for css -->
     </head>
     <body>
+    {% if themes_list %}
         <form class="main_box">
                 <div class="variants">Количество вариантов</div><br>
                 <input type="number" placeholder="0">
             <table> <!-- here create cycle making table rows with themes from database -->
-                <tr>
-                    <td><label for="1">Первая тема</label></td>
-                    <td><input type="number" width="30px" placeholder="0"></td>
-                </tr>
+                {% for theme in themes_list%}
+                    <tr>
+                        <td><label for="1">theme</label></td>
+                        <td><input type="number" width="30px" placeholder="0"></td>
+                    </tr>
+                {% endfor %}
             </table>
             <input type="submit" value="Создать">
         </form>
+    {% else %}
+        <div class="main_box">Простите, тем не завезли.</div>
+    {% endif %}
     </body>
 </html>
