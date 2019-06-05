@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{\sqrt{9+4x-x^2}}{3-x}<1$

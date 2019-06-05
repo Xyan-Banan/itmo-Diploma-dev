@@ -7,78 +7,91 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
-class Groups(models.Model):
+
+class Group(models.Model):
     id_group = models.AutoField(primary_key=True)
-    number = models.CharField(max_length=4)
-    teacher = models.ForeignKey('Users', models.DO_NOTHING, db_column='teacher')
+    number = models.CharField(max_length=4,unique=True)
+    teacher = models.ForeignKey('User', models.DO_NOTHING, db_column='teacher', related_name = 'teacher')
+
+    def __str__(self):
+        return self.number
 
     class Meta:
-        managed = True
-        db_table = 'groups'
+        managed = False
+        db_table = 'group'
 
 
-class Practics(models.Model):
+class Practice(models.Model):
     id_practice = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100)
-    path = models.CharField(max_length=200)
+    name = models.CharField(max_length=100,unique=True)
+    path = models.CharField(max_length=200,unique=True)
+    date_of_sub = models.DateField()
 
     class Meta:
-        managed = True
-        db_table = 'practics'
+        managed = False
+        db_table = 'practice'
 
 
-class PracticsForGroups(models.Model):
-    id_practic = models.OneToOneField(Practics, models.CASCADE, db_column='id_practic')
-    id_group = models.ForeignKey(Groups, models.DO_NOTHING, db_column='id_group')
+class PracticeForGroup(models.Model):
+    id_practic = models.OneToOneField(Practice, models.DO_NOTHING, db_column='id_practic', unique=True)
+    id_group = models.ForeignKey(Group, models.DO_NOTHING, db_column='id_group')
 
     class Meta:
-        managed = True
-        db_table = 'practics_for_groups'
+        managed = False
+        db_table = 'practice_for_group'
 
 
-class PracticsForStudents(models.Model):
-    id_practic = models.ForeignKey(Practics, models.DO_NOTHING, db_column='id_practic')
+class PracticeForStudent(models.Model):
+    id_practic = models.ForeignKey(Practice, models.DO_NOTHING, db_column='id_practic')
     path = models.CharField(max_length=200)
     file_name = models.CharField(max_length=100)
 
     class Meta:
-        managed = True
-        db_table = 'practics_for_students'
+        managed = False
+        db_table = 'practice_for_student'
 
 
-class TasksInPractics(models.Model):
-    id_practice = models.ForeignKey(Practics, models.DO_NOTHING, db_column='id_practice')
-    id_theme = models.ForeignKey('Themes', models.DO_NOTHING, db_column='id_theme')
+class TaskInPractice(models.Model):
+    id_practice = models.ForeignKey(Practice, models.DO_NOTHING, db_column='id_practice')
+    id_theme = models.ForeignKey('Theme', models.DO_NOTHING, db_column='id_theme')
     variant = models.CharField(max_length=2)
     file_name = models.CharField(max_length=100)
 
     class Meta:
-        managed = True
-        db_table = 'tasks_in_practics'
+        managed = False
+        db_table = 'task_in_practice'
 
 
-class Themes(models.Model):
+class Theme(models.Model):
     id_theme = models.AutoField(primary_key=True)
-    theme_name = models.CharField(unique=True, max_length=100, blank=False)
-    path = models.CharField(max_length=200, blank=False, null=False)
+    name = models.CharField(unique=True, max_length=100)
+    path = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
 
     class Meta:
-        managed = True
-        db_table = 'themes'
+        managed = False
+        db_table = 'theme'
 
 
-class Users(models.Model):
+class User(models.Model):
     id_user = models.AutoField(primary_key=True)
     login = models.CharField(unique=True, max_length=45)
-    password = models.CharField(max_length=45)
-    salt = models.CharField(max_length=45, blank=True, null=True)
+    password = models.CharField(max_length=60)
     name = models.CharField(max_length=45)
     sername = models.CharField(max_length=45)
     patronymic = models.CharField(max_length=45, blank=True, null=True)
     status = models.CharField(max_length=7)
-    group = models.ForeignKey(Groups, models.DO_NOTHING, db_column='group', blank=True, null=True)
+    group = models.ForeignKey(Group, models.DO_NOTHING, db_column='group', blank=True, null=True)
     variant = models.CharField(max_length=2, blank=True, null=True)
 
+    def __str__(self):
+        user = self.sername + ' ' + self.name + ' ' + self.patronymic
+        if self.group is not None:
+            user = user + ' (Y' + self.group.number + ')'
+        return  user
+
     class Meta:
-        managed = True
-        db_table = 'users'
+        managed = False
+        db_table = 'user'

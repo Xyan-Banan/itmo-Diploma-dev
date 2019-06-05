@@ -1,0 +1,1 @@
+\item $\displaystyle 2\lg \lg x=\lg (3-2\lg x)$

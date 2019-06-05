@@ -1,0 +1,1 @@
+\item $\displaystyle 0.25^{10x}>64^{\frac{8}{3}-x^2}$

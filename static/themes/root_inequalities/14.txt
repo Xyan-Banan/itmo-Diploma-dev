@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{\sqrt{x^2+5x-84}}{x-7}\geq 0$

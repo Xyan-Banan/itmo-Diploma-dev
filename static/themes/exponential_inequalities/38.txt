@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{11\cdot3^{x-1}-31}{4\cdot9^x-11\cdot3^{x-1}-5}\geq5$

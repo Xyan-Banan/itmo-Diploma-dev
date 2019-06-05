@@ -1,0 +1,1 @@
+\item $\displaystyle x^{\log_{3}\left(27x^2\right)}=\frac{x^9}{81}$

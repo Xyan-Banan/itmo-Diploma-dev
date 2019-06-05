@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{1}{1-\log_{5}\frac{x}{25}}+\frac{2}{\log_{5}5x-2}=3$

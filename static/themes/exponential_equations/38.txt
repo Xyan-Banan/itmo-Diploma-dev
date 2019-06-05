@@ -1,0 +1,1 @@
+\item $\displaystyle 9^{x+2}+45\cdot6^x-9\cdot2^{2x+2}=0$

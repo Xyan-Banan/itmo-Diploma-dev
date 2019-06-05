@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{105}{\left( 2^{4-x^2} -1\right)^2}-\frac{22}{2^{4-x^2}-1}+1\geq0$

@@ -1,0 +1,1 @@
+\item $\displaystyle 8^{x+2}=32^{1-x}$

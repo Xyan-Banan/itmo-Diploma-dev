@@ -1,0 +1,1 @@
+\item $\displaystyle \sqrt{\frac{2-\frac{13}{9}x}{2-x}}\leq x-1$

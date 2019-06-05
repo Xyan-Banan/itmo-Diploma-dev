@@ -1,0 +1,1 @@
+\item $\displaystyle 25\cdot0,2^{x+0,5}=\sqrt{5}\cdot0,04^x$

@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{\sqrt{1-x^3}-1}{1+x}\leq x$

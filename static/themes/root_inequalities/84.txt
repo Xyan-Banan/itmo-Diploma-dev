@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{1}{\left( \sqrt{\frac{2-x}{x}}-\frac{x+1}{2x} \right)^2}\geq 0$

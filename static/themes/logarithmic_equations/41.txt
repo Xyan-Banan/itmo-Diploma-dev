@@ -1,0 +1,1 @@
+\item $\displaystyle \lg^2 x-6\lg\sqrt{x}=\frac{2}{3}\lg x^3-4 $

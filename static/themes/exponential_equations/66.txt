@@ -1,0 +1,1 @@
+\item $\displaystyle 2^{x^2+x-6}+2^{x^2+x-9}=56$

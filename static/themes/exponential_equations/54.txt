@@ -1,0 +1,1 @@
+\item $\displaystyle \left( \frac{5}{7} \right)^{x-2}\cdot\left(\frac{7}{5} \right)^{\frac{1}{x-1}}=\frac{125}{343} $

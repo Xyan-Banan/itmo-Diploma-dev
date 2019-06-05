@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{2^{2x+1}-96\cdot0.5^{2x+3}+2}{x+1}\leq0$

@@ -1,0 +1,1 @@
+\item $\displaystyle 25^x-3\cdot5^x-10\leq0$

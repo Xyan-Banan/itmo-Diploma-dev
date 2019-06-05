@@ -1,0 +1,1 @@
+\item $\displaystyle |x + 2000| < |x - 2001|$

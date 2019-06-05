@@ -1,0 +1,1 @@
+\item $\displaystyle 0,2^{x-1}-0,2^{x+1}=4,8$

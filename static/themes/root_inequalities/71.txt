@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{\sqrt{4x^3-12x+8}}{x+1}\leq \sqrt{4x+7}$

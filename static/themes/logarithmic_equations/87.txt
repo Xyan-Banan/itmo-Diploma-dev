@@ -1,0 +1,1 @@
+\item $\displaystyle 3\sqrt{\log_{3}x}-\log_{3}3x=1$

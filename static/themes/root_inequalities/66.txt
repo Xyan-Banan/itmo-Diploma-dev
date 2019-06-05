@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{13-6x+\sqrt{4x^2-2x-6}}{5-2x}>1$

@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{(\sqrt{3})^{2x}+5\cdot3^{2-x}-14}{49-7^x}=0$

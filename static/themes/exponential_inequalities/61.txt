@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{81^x+2\cdot25^{x\log_53}-5}{\left(4x-1 \right)^2}\geq0$

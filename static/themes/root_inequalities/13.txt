@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{x-2}{x\sqrt{10+3x-x^2}}>0$

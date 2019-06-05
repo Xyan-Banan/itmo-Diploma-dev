@@ -1,0 +1,1 @@
+\item $\displaystyle 5^{3\lg x}=12,5x$

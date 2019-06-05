@@ -1,0 +1,1 @@
+\item $\displaystyle \sqrt{-25x^2+15x-2}\cdot (8x^2-6x+1)\geq 0$

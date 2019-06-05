@@ -1,0 +1,1 @@
+\item $\displaystyle \lg^2(100x)+\lg^2(10x)+\lg^2 x=14$

@@ -1,0 +1,1 @@
+\item $\displaystyle 3\cdot9^{x-0.5}-7\cdot6^x+3\cdot4^{x+1}=0 $

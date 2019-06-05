@@ -1,0 +1,1 @@
+\item $\displaystyle 3^x+\sqrt{3^{x+2}\cdot7^x}=3\cdot7^x+\sqrt{21^x}$

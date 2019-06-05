@@ -1,0 +1,1 @@
+\item $\displaystyle \log_{4x+1}7+\log_{9x}7=0$

@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{2^{2x-1}\cdot4^{x+1}}{8^{x-1}}=\left(\frac{1}{64}\right)^{-1} $

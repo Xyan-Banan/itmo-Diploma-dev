@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{\sqrt{x^2-6x-7}}{x-7}\geq \frac{x+1}{3}$

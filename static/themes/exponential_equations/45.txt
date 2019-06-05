@@ -1,0 +1,1 @@
+\item $\displaystyle 7\cdot9^{x^2-3x+1}+5\cdot6^{x^2-3x+1}-48\cdot4^{x^2-3x}=0 $

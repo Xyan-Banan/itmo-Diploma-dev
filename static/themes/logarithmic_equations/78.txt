@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{\log_{8}\frac{8}{x^2}}{\log^2_{8}x}=3$

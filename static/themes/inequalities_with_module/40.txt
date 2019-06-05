@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{6}{|x|} \geq 7+x$

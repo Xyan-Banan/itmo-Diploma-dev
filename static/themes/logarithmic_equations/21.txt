@@ -1,0 +1,1 @@
+\item $\displaystyle \log_{16}x=-\frac{3}{4}$

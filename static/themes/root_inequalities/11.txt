@@ -1,0 +1,1 @@
+\item $\displaystyle (x^2+8x+15)\cdot \sqrt{x+4}\geq 0$

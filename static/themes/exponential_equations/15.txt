@@ -1,0 +1,1 @@
+\item $\displaystyle 5^{\frac{6x+3}{x}}=\sqrt[4]{125^{2x+1}}$

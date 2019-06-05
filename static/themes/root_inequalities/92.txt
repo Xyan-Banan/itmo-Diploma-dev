@@ -1,0 +1,1 @@
+\item $\displaystyle 11\cdot \sqrt{2x-\sqrt{48x-144}}>2x-12$

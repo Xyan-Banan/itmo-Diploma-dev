@@ -1,0 +1,1 @@
+\item $\displaystyle 30> \frac{x}{60-\sqrt{x}}$

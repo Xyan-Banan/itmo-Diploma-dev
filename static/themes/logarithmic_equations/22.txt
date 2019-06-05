@@ -1,0 +1,1 @@
+\item $\displaystyle \log_{\frac{1}{81}}x=-\frac{3}{2}$

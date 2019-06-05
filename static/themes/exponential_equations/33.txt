@@ -1,0 +1,1 @@
+\item $\displaystyle 5^{x+6}-3^{x+7}=43\cdot5^{x+4}-19\cdot3^{x+5}$

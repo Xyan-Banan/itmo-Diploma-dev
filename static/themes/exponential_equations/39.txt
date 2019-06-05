@@ -1,0 +1,1 @@
+\item $\displaystyle 8^x-4\cdot4^x-3\cdot2^{x+1}+9=0$

@@ -1,0 +1,1 @@
+\item $\displaystyle \sqrt{6x-13}-\sqrt{3x^2-13x+13}\geq 3x^2-19x+26$ сумма целых решений

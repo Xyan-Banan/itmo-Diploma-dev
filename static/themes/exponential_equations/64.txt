@@ -1,0 +1,1 @@
+\item $\displaystyle \left(\frac{4}{9} \right)^{x+2\sqrt{x}-1}=2.25^{x+\sqrt{x}-1}$

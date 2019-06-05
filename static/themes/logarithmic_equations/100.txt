@@ -1,0 +1,1 @@
+\item $\displaystyle \log^2_{2}x+(x-1)\log_{2}x=6-2x$

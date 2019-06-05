@@ -1,0 +1,1 @@
+\item $\displaystyle 2^{2x+1}-5\cdot6^x+3^{2x+1}=0$

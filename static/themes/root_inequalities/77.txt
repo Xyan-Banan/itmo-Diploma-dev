@@ -1,0 +1,1 @@
+\item $\displaystyle \sqrt{\frac{\sqrt{x}-\frac{2}{3}}{x-\frac{23}{27}}}\leq \frac{1}{\sqrt{x}-\frac{1}{3}}$

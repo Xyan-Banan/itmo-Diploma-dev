@@ -1,0 +1,1 @@
+\item $\displaystyle 2\log_{8}2x+\log_{8}(x^2-2x+1)=\frac{4}{3}$

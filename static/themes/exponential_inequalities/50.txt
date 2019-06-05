@@ -1,0 +1,1 @@
+\item $\displaystyle 3^{|x|}-8-\frac{3^{|x|}+9}{9^{|x|}-4\cdot3^{|x|}+3}\leq \frac{5}{3^{|x|}-1}$

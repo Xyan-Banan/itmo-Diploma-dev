@@ -1,0 +1,1 @@
+\item $\displaystyle 32^{3(x^3-8)}=8^{19(2x-x^2)}$

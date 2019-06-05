@@ -67,3 +67,9 @@ a .link{
 div div a{
     text-align: center;
 }
+
+.logout {
+    position: absolute;
+    right: 0%;
+    top: 0%;
+}

@@ -1,0 +1,1 @@
+\item $\displaystyle \left( \frac{1}{36} \right)^x-5\cdot6^{-x}-6\leq0$

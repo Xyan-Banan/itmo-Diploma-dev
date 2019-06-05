@@ -1,0 +1,1 @@
+\item $\displaystyle 3^{2x-3}-9^{x-1}+27^\frac{2x}{3}=675$

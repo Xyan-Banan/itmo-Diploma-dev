@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{2\cdot3^{x+3}-5^{x+3}}{5\cdot3^x-3\cdot5^x}<1$

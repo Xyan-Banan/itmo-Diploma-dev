@@ -1,0 +1,1 @@
+\item $\displaystyle \sqrt{\frac{x^2-22x+121}{x^2-24x+140}}\geq 50x-2x^2-309$

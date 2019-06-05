@@ -1,0 +1,1 @@
+\item $\displaystyle 3\cdot4^x+(3x-10)\cdot2^x+3-x=0$

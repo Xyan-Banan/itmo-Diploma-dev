@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{31-5\cdot2^x}{4^x-24\cdot2^x+128}\geq0.25$

@@ -7,12 +7,17 @@
         <link rel="stylesheet" href="{% static "/css/login.css" %}">
     </head>
     <body>
-        <form class="main_box" method="post">
+        <form class="main_box" method="post">{% csrf_token %}
             Hello world!<br><br>
-            
-            <input type="text" placeholder="login" name="login"><br>
-            <input type="password" placeholder="password" name="password"><br>
-            <input type="submit" value="LOG IN" id="login_button">
+            {% if message %}
+                {{ message }}<br><br>
+            {% endif %}
+            <input type="text" placeholder="Логин" name="login"><br>
+            <input type="password" placeholder="Пароль" name="password"><br>
+            <input type="submit" value="Войти" id="login_button">
+            {% if request.session.next %}
+                <input type="hidden" name="next" value="{{ request.GET.next }}"
+            {% endif %}
         </form>
     </body>
 </html>

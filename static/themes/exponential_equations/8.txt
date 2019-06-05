@@ -1,0 +1,1 @@
+\item $\displaystyle \left(\frac{2}{9}\right)^{2x+3}=4,5^{x-2}$

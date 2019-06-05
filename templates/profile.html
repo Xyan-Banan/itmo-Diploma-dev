@@ -12,11 +12,11 @@
             <div class="profile_info">
                 <div id="fioInfo">
                     <p>
-                        {{profile.name}} {{profile.sername}} {% if profile.patronymic %} {{profile.patronymic}} {% endif %}
+                        {{profile.sername}} {{profile.name}} {% if profile.patronymic %} {{profile.patronymic}} {% endif %}
                     </p>
                 </div>
                 {% if profile.status == "student"%}
-                    <div>группа <span>Y2434</span> вариант <span>10</span></div>
+                    <div>группа Y{{ profile.group }} вариант {{ profile.variant }} </div>
                 {% endif %}
             </div>
             {% if profile.status == "teacher"%}
@@ -24,11 +24,15 @@
                 <div>
                     <form>
                         <select class="link">
-                            <option>...</option>
-                            <option>2434</option>
-                            <option>2434</option>
-                            <option>2434</option>
-                            <option>2434</option>
+                            {% if groups_list %}
+                                <option>Группа</option>
+                                {% for group in groups_list %}
+                                    <option>{{ group }}</option>
+                                {% endfor %}
+                            {%else%}
+                                <option>Вы не ведете ни у одной группы</option>
+                            {% endif %}
+
                         </select>
                         <div class="buttons">
                             <button type="submit" formaction="../journal.html" class="link">Журнал</button>
@@ -45,5 +49,8 @@
             </div>
             {% endif %}
         </div>
+
+        <form method="post">{% csrf_token %}<input type="submit" class="link logout" name='logout' value="Выйти"></form>
+
     </body>
 </html>

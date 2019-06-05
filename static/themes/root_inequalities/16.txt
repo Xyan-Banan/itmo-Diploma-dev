@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{\sqrt{x^6-64}}{x-3}\geq 0$

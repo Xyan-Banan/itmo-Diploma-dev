@@ -1,0 +1,1 @@
+\item $\displaystyle \log_{7x-6}(7x^2+x-6)\cdot\log_{x+1}(x^3+1)=\log_{7x-6}(7x^2+x-6)+\log_{x+1}(x^3+1)$

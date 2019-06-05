@@ -1,0 +1,1 @@
+\item $\displaystyle x^{\lg x}=100x^2$

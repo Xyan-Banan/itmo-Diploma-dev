@@ -1,0 +1,1 @@
+\item $\displaystyle 1-\sqrt{\frac{1-x}{7-4x}}\leq x$

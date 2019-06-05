@@ -1,0 +1,1 @@
+\item $\displaystyle \log_{2}(4^x+4)=x+\log_{2}(2^{x+1}-3)$

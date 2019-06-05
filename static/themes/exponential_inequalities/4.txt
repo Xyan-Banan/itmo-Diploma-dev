@@ -1,0 +1,1 @@
+\item $\displaystyle \left( \frac{1}{5} \right)^{x^2}\leq \frac{1}{625}$

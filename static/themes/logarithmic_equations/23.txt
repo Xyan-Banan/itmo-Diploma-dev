@@ -1,0 +1,1 @@
+\item $\displaystyle \log_{7}(x^2-3x+3)=0$

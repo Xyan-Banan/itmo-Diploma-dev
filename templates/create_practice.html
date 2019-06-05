@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Создание практики</title>
+        <link rel="stylesheet" href="{% static "/css/main.css" %}">
+        <link rel="stylesheet" href="{% static "/css/create_practice.css" %}">
+    </head>
+    <body>
+
+    <form method="post" action="/profile/">{% csrf_token %}<input type="submit" class="link back_btn" name='back_bth' value="Назад"></form>
+
+    {% if themes_list %}
+        <form class="main_box" method="post">{% csrf_token %}
+            {% if message %}
+                {{message}}
+            {% endif %}
+            <table>
+                <tr>
+                    <td><div class="variants">Название практики</div></td>
+                    <td><div class="variants">Количество вариантов</div></td>
+                </tr>
+                <tr>
+                    <td><input type=text name="practice_name"></td>
+                    <td><input type="number" placeholder="0" name="variants_quantity"></td>
+                </tr>
+            </table>
+            <table>
+                {% for theme in themes_list%}
+                    <tr>
+                        <td><label for="{{ theme.id_theme }}">{{ theme.name }}</label></td>
+                        <td><input type="number" id="{{ theme.id_theme }}" name="theme{{ theme.id_theme }}" width="30px" placeholder="0"></td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <input type="submit" class="link" name="submit" value="Создать">
+        </form>
+    {% else %}
+        <div class="main_box">В базе данных нет данных о темах</div>
+    {% endif %}
+    </body>
+</html>

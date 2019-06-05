@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{2}{3^x-9}\geq\frac{8}{3^x-3}$

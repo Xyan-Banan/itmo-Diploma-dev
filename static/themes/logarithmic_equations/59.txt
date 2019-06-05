@@ -1,0 +1,1 @@
+\item $\displaystyle \log_{x}(9x^2)\cdot\log^2_{3}x=4$

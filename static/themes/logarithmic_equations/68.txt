@@ -1,0 +1,1 @@
+\item $\displaystyle 2^{\log_{3}x^2}\cdot 5^{\log_{3}x}=400$

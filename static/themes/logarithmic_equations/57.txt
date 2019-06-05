@@ -1,0 +1,1 @@
+\item $\displaystyle \log_{49}(2x^2+x-5)+\log_{\frac{1}{7}}(1+x)=0$

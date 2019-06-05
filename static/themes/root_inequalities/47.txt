@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{(\sqrt{x+4}+x-2)\cdot (\sqrt{4x+9}+x-3)}{\sqrt{6-x-4x^2-x^3}}\leq 0$

@@ -1,0 +1,1 @@
+\item $\displaystyle \left(\frac{x}{400}\right)^{\log_{5}\frac{x}{8}}=\frac{1024}{x^3}$

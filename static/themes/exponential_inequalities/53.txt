@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{4^x-2^{x+4}+30}{2^x-2}+\frac{4^x-7\cdot2^x+3}{2^x-7}\leq2^{x+1}-14$

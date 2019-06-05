@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{\sqrt{x^2-5x+8}}{3-x}\geq 1$

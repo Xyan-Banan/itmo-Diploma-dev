@@ -1,0 +1,1 @@
+\item $\displaystyle \left(1-\log_{2}x\right)\cdot\sqrt{\log_{\frac{x}{2}}\sqrt{x}}=1$

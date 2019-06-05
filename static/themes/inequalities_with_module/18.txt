@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{x^2+4x+4}{2x+12} \leq 1- \frac{|x+4|}{x+4}$

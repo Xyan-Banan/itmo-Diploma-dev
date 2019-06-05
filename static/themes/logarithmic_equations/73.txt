@@ -1,0 +1,1 @@
+\item $\displaystyle \log_{3x+7}(5x+3)+\log_{5x+3}(3x+7)=2$

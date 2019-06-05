@@ -1,0 +1,1 @@
+\item $\displaystyle 9^x-2^{\frac{2x+1}{2}}<2^{\frac{2x+7}{2}}-3^{2x-1}$

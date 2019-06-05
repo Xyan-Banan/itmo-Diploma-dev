@@ -1,0 +1,1 @@
+\item $\displaystyle\log_42^{4x}=2^{\log_{\sqrt{2}}2} $

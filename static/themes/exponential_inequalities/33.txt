@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{1}{2^x-2}\geq\frac{1}{4-2^{x-1}}$

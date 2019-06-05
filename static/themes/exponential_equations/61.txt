@@ -1,0 +1,1 @@
+\item $\displaystyle 8\cdot(4^x+4^{-x})-54\cdot(2^x+2^{-x})+101=0$

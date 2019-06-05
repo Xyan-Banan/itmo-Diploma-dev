@@ -1,0 +1,1 @@
+\item $\displaystyle \log^2_{\frac{1}{2}}4x+\log_{2}\frac{x}{8}=7$

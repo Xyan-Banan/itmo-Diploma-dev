@@ -1,0 +1,1 @@
+\item $\displaystyle \sqrt{2x^2-18x+16}<x-4$

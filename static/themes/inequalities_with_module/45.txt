@@ -1,0 +1,1 @@
+\item$\displaystyle |x-12|\leq \frac{x}{12-x}$

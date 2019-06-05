@@ -1,0 +1,1 @@
+\item $\displaystyle \log_{25}x+\log_5x=\log_{\frac{1}{5}}\sqrt{8} $

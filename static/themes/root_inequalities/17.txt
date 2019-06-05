@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{\sqrt{2x^2-5x-3}}{6+3\sqrt{3}x-2x^2}\leq 0$

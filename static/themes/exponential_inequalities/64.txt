@@ -1,0 +1,1 @@
+\item $\displaystyle \frac{1}{5^{-x}-1}\geq\frac{2-3\cdot5^{1-x}}{5^x-1}$
