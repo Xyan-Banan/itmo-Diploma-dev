@@ -1,23 +1,17 @@
-{% load static %}
+{% extends "base.html" %}
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" href="{% static "/css/main.css" %}">
-        <link rel="stylesheet" href="{% static "/css/login.css" %}">
-    </head>
-    <body>
-        <form class="main_box" method="post">{% csrf_token %}
-            Hello world!<br><br>
+{% load static %}
+{% block header %}
+    <title>Авторизация</title>
+    <link rel="stylesheet" href="{% static "/css/login.css" %}">
+{% endblock header %}
+{% block content %}
+    <form class="main_box" method="post">{% csrf_token %}
             {% if message %}
                 {{ message }}<br><br>
             {% endif %}
             <input type="text" placeholder="Логин" name="login"><br>
             <input type="password" placeholder="Пароль" name="password"><br>
             <input type="submit" value="Войти" id="login_button">
-            {% if request.session.next %}
-                <input type="hidden" name="next" value="{{ request.GET.next }}"
-            {% endif %}
-        </form>
-    </body>
-</html>
+    </form>
+{% endblock content %}

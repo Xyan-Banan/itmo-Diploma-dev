@@ -10,8 +10,8 @@ from django.db import models
 
 class Group(models.Model):
     id_group = models.AutoField(primary_key=True)
-    number = models.CharField(max_length=4,unique=True)
-    teacher = models.ForeignKey('User', models.DO_NOTHING, db_column='teacher', related_name = 'teacher')
+    number = models.CharField(unique=True, max_length=4)
+    teacher = models.ForeignKey('User', models.DO_NOTHING, db_column='teacher', related_name='teacher')
 
     def __str__(self):
         return self.number
@@ -23,9 +23,12 @@ class Group(models.Model):
 
 class Practice(models.Model):
     id_practice = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100,unique=True)
-    path = models.CharField(max_length=200,unique=True)
-    date_of_sub = models.DateField()
+    name = models.CharField(unique=True, max_length=100)
+    path = models.CharField(max_length=200)
+    date_of_sub = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         managed = False
@@ -33,33 +36,13 @@ class Practice(models.Model):
 
 
 class PracticeForGroup(models.Model):
-    id_practic = models.OneToOneField(Practice, models.DO_NOTHING, db_column='id_practic', unique=True)
+    id_practice_for_group = models.AutoField(primary_key=True)
+    id_practice = models.OneToOneField(Practice, models.DO_NOTHING, db_column='id_practice', unique=True)
     id_group = models.ForeignKey(Group, models.DO_NOTHING, db_column='id_group')
 
     class Meta:
         managed = False
         db_table = 'practice_for_group'
-
-
-class PracticeForStudent(models.Model):
-    id_practic = models.ForeignKey(Practice, models.DO_NOTHING, db_column='id_practic')
-    path = models.CharField(max_length=200)
-    file_name = models.CharField(max_length=100)
-
-    class Meta:
-        managed = False
-        db_table = 'practice_for_student'
-
-
-class TaskInPractice(models.Model):
-    id_practice = models.ForeignKey(Practice, models.DO_NOTHING, db_column='id_practice')
-    id_theme = models.ForeignKey('Theme', models.DO_NOTHING, db_column='id_theme')
-    variant = models.CharField(max_length=2)
-    file_name = models.CharField(max_length=100)
-
-    class Meta:
-        managed = False
-        db_table = 'task_in_practice'
 
 
 class Theme(models.Model):

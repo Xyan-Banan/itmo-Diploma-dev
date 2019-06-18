@@ -16,3 +16,28 @@ body {
     margin: 0px;
     padding: 0px;
 }
+
+.link {
+    border: 1px solid blue;
+    border-radius: 5px;
+    background-color: aliceblue;
+    padding: 10px;
+    font-size: 15px;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.buttons {
+    display: flex;
+    margin: 10px 0px;
+    justify-content: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

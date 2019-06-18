@@ -1,18 +1,17 @@
+{% extends "base.html" %}
+
 {% load static %}
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Создание практики</title>
-        <link rel="stylesheet" href="{% static "/css/main.css" %}">
-        <link rel="stylesheet" href="{% static "/css/create_practice.css" %}">
-    </head>
-    <body>
-
+{% block header %}
+    <title>Создание практики</title>
+    <link rel="stylesheet" href="{% static "/css/create_practice.css" %}">
+{% endblock header %}
+        
+{% block content %}
     <form method="post" action="/profile/">{% csrf_token %}<input type="submit" class="link back_btn" name='back_bth' value="Назад"></form>
 
     {% if themes_list %}
-        <form class="main_box" method="post">{% csrf_token %}
+        <form method="post">{% csrf_token %}
             {% if message %}
                 {{message}}
             {% endif %}
@@ -39,5 +38,4 @@
     {% else %}
         <div class="main_box">В базе данных нет данных о темах</div>
     {% endif %}
-    </body>
-</html>
+{% endblock content %}

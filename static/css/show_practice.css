@@ -1,0 +1,30 @@
+.main_box {
+    flex-direction: row;
+    align-items: stretch;
+}
+
+form {
+    margin: 0px 20px;
+    justify-content: flex-start;
+}
+
+.link {
+    margin: 10px 0px;
+}
+
+.buttons {
+    flex-direction: column;
+}
+
+body {
+    align-items: stretch;
+}
+
+.back_btn_form {
+    justify-content: flex-end;
+}
+
+.manage {
+    align-items: stretch;
+    justify-content: stretch;
+}
