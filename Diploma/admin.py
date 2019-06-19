@@ -15,7 +15,7 @@ class GroupAdmin(admin.ModelAdmin):
     list_filer = ['number','teacher']
 
 class PracticeAdmin(admin.ModelAdmin):
-    list_display = ('name','id_practice','date_of_sub')
+    list_display = ('name','id_practice')
 
 admin.site.register(Theme,ThemeAdmin)
 admin.site.register(User,UserAdmin)

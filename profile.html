@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block header %}
+    <title>Профиль</title>
+    <link rel="stylesheet" href="{% static "/css/profile.css" %}">
+    <script src="{% static "/js/profile.js" %}" defer></script>
+{% endblock header %}
+        
+{% block content %}
+    <div class="profile_info">
+        <div id="fioInfo">{{profile.sername}} {{profile.name}} {% if profile.patronymic %} {{profile.patronymic}} {% endif %}</div>
+        {% if profile.status == "student"%}
+            <div>группа Y{{ profile.group }}</div>
+        {% endif %}
+    </div>
+    {% if profile.status == "teacher"%}
+    <div class="buttons">
+        <form>
+            <select class="link" name="get_practices">
+                {% if groups_list %}
+                    <option>Группа</option>
+                    <option>Все</option>
+                    {% for group in groups_list %}
+                        <option>{{ group }}</option>
+                    {% endfor %}
+                {%else%}
+                    <option>Вы не ведете ни у одной группы</option>
+                {% endif %}
+            </select>
+            <button type="submit" class="link">Практики</button>
+        </form>
+        <a href="./create_practice">
+            <img class="link img" src="{% static "/img/instruments.png" %}" alt="instruments" height="50">
+            <p class="link">Создать практику</p>
+        </a>
+    </div>
+    <div class="practices">
+        <p class="group_attachment">{{group_attachment}}</p>
+        <table>
+            {% for practice in practice_list %}
+                <tr>
+                    <td class="practice_name"><a href="./show_practice/{{practice.id_practice}}" id="{{practice.id_practice}}">{{practice.name}}</td>
+                    <td>
+                        <form method="post" class="buttons">{% csrf_token %}
+                            <div class="attach">
+                                <button class="link manage" onclick="attach({{practice.id_practice}},this)">Привязать</button>
+                                <select class="link manage">
+                                    {% if groups_list %}
+                                        <option>Группа</option>
+                                        {% for group in groups_list %}
+                                            <option>{{ group }}</option>
+                                        {% endfor %}
+                                    {%else%}
+                                        <option>Вы не ведете ни у одной группы</option>
+                                    {% endif %}
+                                </select>
+                                <input type=date class="link manage" min="{{today}}">
+                            </div>
+                            <div class="rename_remove">
+                                <button class="link manage" onclick="rename({{practice.id_practice}},this)">Переименовать</button>
+                                <button class="link manage" onclick="remove({{practice.id_practice}},this)">Удалить</button>
+                            </div>
+                        </form>    
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+    
+    <form method="post">{% csrf_token %}<input type="submit" class="link logout" name='logout' value="Выйти"></form>
+
+    {% if alert_message %}
+        <script> alert("{{alert_message}}") </script>
+    {% endif %}
+
+{% endblock content %}

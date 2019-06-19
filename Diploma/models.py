@@ -25,7 +25,6 @@ class Practice(models.Model):
     id_practice = models.AutoField(primary_key=True)
     name = models.CharField(unique=True, max_length=100)
     path = models.CharField(max_length=200)
-    date_of_sub = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -36,9 +35,9 @@ class Practice(models.Model):
 
 
 class PracticeForGroup(models.Model):
-    id_practice_for_group = models.AutoField(primary_key=True)
-    id_practice = models.OneToOneField(Practice, models.DO_NOTHING, db_column='id_practice', unique=True)
+    id_practice = models.OneToOneField(Practice, models.DO_NOTHING,primary_key=True, db_column='id_practice', unique=True)
     id_group = models.ForeignKey(Group, models.DO_NOTHING, db_column='id_group')
+    date_of_sub = models.DateField(blank=True, null=True)
 
     class Meta:
         managed = False

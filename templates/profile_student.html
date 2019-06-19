@@ -1,0 +1,24 @@
+{% extends "profile.html" %}
+
+{%load static%}
+
+{% block group %}
+    <div>группа Y{{ profile.group }}</div>
+{% endblock group %}
+
+{% block interface %}
+    <div class="practices">
+        {% if attached_practices%}
+            <p class="group_attachment">Ваши практики</p>
+            <table>
+                {% for practice in attached_practices %}
+                    <tr>
+                        <td class="practice_name"><a href="./show_practice/{{practice.id_practice}}" id="{{practice.id_practice}}">{{practice.name}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p class="group_attachment">Ваш преподаватель еще не добавил практик</p>
+        {% endif %}
+    </div>
+{% endblock interface %}

@@ -1,12 +1,3 @@
-#fioInfo {
-    margin: 10px;
-    padding: 10px;
-    font: 900 25px sans-serif;
-    background-color: aliceblue;
-    border: 1px dotted blueviolet;
-    border-radius: 10px;
-}
-
 a {
     text-decoration: none;
     text-align: center;
@@ -17,6 +8,21 @@ a {
 p {
     margin: 0px;
     padding: 0px;
+}
+
+#fioInfo {
+    margin: 10px;
+    padding: 10px;
+    font: 900 25px sans-serif;
+    background-color: aliceblue;
+    border: 1px dotted blueviolet;
+    border-radius: 10px;
+}
+
+div.profile_info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .img {
@@ -42,6 +48,13 @@ div div a{
     top: 0%;
 }
 
+div.practices {
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 form {
     flex-direction: row;
 }
@@ -59,6 +72,7 @@ table {
 
 td {
     border: 1px solid black;
+    padding: 0px;
 }
 
 td.practice_name {
@@ -67,14 +81,14 @@ td.practice_name {
 
 form.buttons {
     margin: 0px;
-    padding: 5px 0px;
+    padding: 0px;
     flex-direction: column;
     align-items: stretch;
 }
 
 button.manage, select.manage, input.manage {
     font-size: 10px;
-    padding: 5px;
+    padding: 3px;
     margin: 3px;
     cursor: pointer;
 }

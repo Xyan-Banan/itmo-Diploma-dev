@@ -1,6 +1,7 @@
 from pathlib import Path
 import random
 import os
+import datetime
 
 from django.http                import HttpResponseNotFound
 from django.shortcuts           import render,redirect
@@ -30,7 +31,7 @@ def login(request):
         if login_string and password:
             # check if exist user with login
             try:
-                user = User.objects.get(login = login_string)
+                user = User.objects.get(login__regex=login_string)
             except ObjectDoesNotExist:
                 return render(request, 'login.html',{'message':'Логин или пароль не существуют'})
             
@@ -47,6 +48,96 @@ def login(request):
         
     return render(request, 'login.html')
 
+def check_practice_action(request):
+    if 'rename' in request.POST:
+        id_practice, new_name = request.POST['rename'].split('.')
+        try:
+            check_practice = Practice.objects.get(name__regex=new_name)
+            print(check_practice)
+            return 'Практика с таким именем уже существует'
+        except ObjectDoesNotExist:
+            try:
+                practice = Practice.objects.get(pk=id_practice)
+                practice.name = new_name
+                practice.save()
+                return
+            except ObjectDoesNotExist as ex:
+                print(format(ex))
+                return 'Ошибка переименования практики'
+
+    if 'remove' in request.POST:
+        id_practice = request.POST['remove']
+        try: 
+            Practice.objects.get(pk=id_practice).delete()
+            return
+        except ObjectDoesNotExist as ex:
+            print(format(ex))
+            return 'Ошибка удаления практики'
+    
+    if 'attach' in request.POST:
+        attach = request.POST['attach'].split('.')
+        try:
+            practice = Practice.objects.get(pk=attach[0])
+            group = Group.objects.get(number=attach[1])
+            date_of_sub = attach[2] if len(attach) > 2 else ''
+            if date_of_sub:
+                pr_for_gr = PracticeForGroup(id_practice=practice,id_group=group,date_of_sub=date_of_sub)
+            else:
+                pr_for_gr = PracticeForGroup(id_practice=practice,id_group=group)
+            pr_for_gr.save()
+            return
+        except ObjectDoesNotExist as ex:
+            print(format(ex))
+            return 'Ошибка привязки группы'
+    
+    if 'unattach' in request.POST:
+        unattach = request.POST['unattach']
+        try:
+            PracticeForGroup.objects.get(pk=unattach).delete()
+            return
+        except ObjectDoesNotExist as ex:
+            print(format(ex))
+            return 'Ошибка отвязки практики'
+
+def fill_teacher_interface(request): 
+    user = request.session['user']
+    groups_list = Group.objects.filter(teacher=user.id_user).order_by('number')
+    # check and perform database changes
+    alert_message = check_practice_action(request)
+    # get all practices and list of connections practices with group
+    practice_for_groups_list = PracticeForGroup.objects.all()
+    attached_practices = dict(practice_for_groups_list.values_list('id_practice','date_of_sub'))
+    practice_list = Practice.objects.all().order_by('name')
+    if 'get_practices' in request.GET:
+        group_num = request.GET['get_practices']
+        # check, which practices needed to be shown
+        if group_num == 'Все':
+            group_num = 'Все практики'
+        elif group_num != 'Непривязанные' and group_num != 'Вы не ведете ни у одной группы':
+            id_group = Group.objects.get(number=group_num).id_group
+            practice_for_groups_list = practice_for_groups_list.filter(id_group=id_group).values_list('id_practice',flat=True)
+            practice_list = practice_list.filter(id_practice__in=practice_for_groups_list)
+            group_num = 'Практики группы Y' + group_num
+        else:
+            practice_for_groups_list = practice_for_groups_list.values_list('id_practice',flat=True)
+            practice_list = practice_list.exclude(id_practice__in=practice_for_groups_list)
+            group_num = 'Непривязанные практики'
+    else:
+        group_num = 'Все практики'
+    # setting minimum date to submit the practice
+    now = datetime.datetime.now() + datetime.timedelta(days=1)
+    context = {
+        'profile':user,
+        'group_attachment':group_num,
+        'groups_list':groups_list,
+        'practice_list':practice_list,
+        'attached_practices':attached_practices,
+        'today':str(now)[:10]
+    }
+    if alert_message:
+        context['alert_message'] = alert_message
+    return render(request, 'profile_teacher.html', context)
+
 def profile(request):
     if 'user' not in request.session:
         return redirect('Diploma:login')
@@ -55,26 +146,47 @@ def profile(request):
         del request.session['user']
         return redirect('Diploma:profile')
 
-    # if 'remove' in request.POST:
-    #     continue
-
     user = request.session['user']
     context = {
         'profile':user,
         }
     if user.status == 'teacher':
-        groups_list = Group.objects.filter(teacher=user.id_user).order_by('number')
-        practice_list = Practice.objects.all()
-        practice_for_groups_list = PracticeForGroup.objects.values_list('id_practice',flat=True)
-        for practice in practice_list:
-            practice.name = practice.name.replace('_',' ')
-            if practice.id_practice in practice_for_groups_list:
-                practice_list.remove(practice)
-        context['groups_list'] = groups_list
-        context['practice_list'] = practice_list
-    return render(request, 'profile.html', context)
+        return fill_teacher_interface(request)
+    
+    connections = PracticeForGroup.objects.filter(id_group=user.group).order_by('date_of_sub')
+    print(connections)
+    connections = connections.values_list('id_practice',flat=True)
+    print(connections)
+    attached_practices = Practice.objects.filter(id_practice__in=connections)
+    print(attached_practices)
 
-def createthemelist(request):
+    context['attached_practices'] = attached_practices
+
+    return render(request,'profile_student.html',context)
+
+
+def init_task_array(dir_path):
+    "returns array of file names in dir_path"
+    task_array = []
+
+    files = dir_path.iterdir()
+    for i in files:
+        task_array.append(i.name)
+    return task_array
+
+def init_tasks_in_themes(themes_list):
+    "returns dict of filenames in each theme"
+    tasks_in_themes = {}
+    
+    for id_theme in themes_list.keys():
+        theme = Theme.objects.get(pk=id_theme)
+        theme_abs_path = Path(finders.find(theme.path))
+        tasks_array = init_task_array(theme_abs_path)
+        tasks_in_themes[id_theme] = tasks_array
+    
+    return tasks_in_themes
+
+def create_theme_list(request):
     
     themes_list = {}
     
@@ -102,30 +214,9 @@ def createthemelist(request):
         return -1
     return themes_list
 
-def InitTaskArray(dir_path):
-    "returns array of file names in dir_path"
-    a = []
-
-    files = dir_path.iterdir()
-    for i in files:
-        a.append(i.name)
-    return a
-
-def InitTasksInThemes(themes_list):
-    "returns dict of filenames in each theme"
-    tasks_in_themes = {}
-    
-    for id_theme in themes_list.keys():
-        theme = Theme.objects.get(pk=id_theme)
-        theme_abs_path = Path(finders.find(theme.path))
-        tasks_array = InitTaskArray(theme_abs_path)
-        tasks_in_themes[id_theme] = tasks_array
-    
-    return tasks_in_themes
-
 def createfile(request):
 
-    themes_list = createthemelist(request)
+    themes_list = create_theme_list(request)
     if themes_list == -1:
         return -1
 
@@ -140,14 +231,14 @@ def createfile(request):
                             \\begin{document}\n\n''')
     variants_quant = int(request.POST['variants_quantity'])
     
-    tasks_in_themes = InitTasksInThemes(themes_list)
+    tasks_in_themes = init_tasks_in_themes(themes_list)
     selected_tasks = {}
     # cycle by variants
     for i in range(variants_quant):
         tmp_practice.write('\n\\centering {Вариант ' + str(i + 1) + '}\n\n')
         selected_tasks[i] = {}
         # cycle by themes
-        for id_theme in themes_list.keys():
+        for id_theme in themes_list:
             selected_tasks[i][id_theme] = []
             tmp_practice.write('\\begin{itemize}\n')
             number_of_needed_tasks = int(themes_list[id_theme])
@@ -158,7 +249,7 @@ def createfile(request):
                 # check if need to refill tasks_in_theme array with tasks
                 tasks_quantity = len(tasks_in_themes[id_theme])
                 if tasks_quantity - 1 < number_of_needed_tasks - j:
-                    tasks_in_themes[id_theme] = InitTaskArray(theme_abs_path)
+                    tasks_in_themes[id_theme] = init_task_array(theme_abs_path)
                     tasks_quantity = len(tasks_in_themes[id_theme])
                 # get random task
                 task_num = random.randint(0, tasks_quantity - 1)
@@ -235,7 +326,8 @@ def create_practice(request):
             if practice_id == -1:
                 context['message'] ='Не выбрано ни одной темы или неверно введено количество заданий'
             else:
-                redirect('Diploma:show_practice',practice_id=practice_id)
+                return redirect('/profile/show_practice/' + str(practice_id) + '?from_create=true')
+                #reverse('Diploma:show_practice') ,kwargs={'practice_id':str(practice_id)}) #,'from_create':'true'}))
     
     return render(request, 'create_practice.html',context)
 
@@ -243,6 +335,10 @@ def show_practice(request, practice_id):
     
     if 'user' not in request.session:
         return redirect('Diploma:login')
+
+    user = request.session['user']
+    if (user.status != 'teacher') and ('from_create' in request.GET):
+        raise PermissionDenied
 
     try:
         practice = Practice.objects.get(pk=practice_id)
