@@ -6,12 +6,22 @@
     <link rel="stylesheet" href="{% static "/css/login.css" %}">
 {% endblock header %}
 {% block content %}
-    <form method="post">{% csrf_token %}
-            {% if message %}
-                {{ message }}<br><br>
-            {% endif %}
-            <input type="text" placeholder="Логин" name="login"><br>
-            <input type="password" placeholder="Пароль" name="password"><br>
-            <input type="submit" value="Войти" id="login_button">
-    </form>
+    <div>
+        <form method="post">{% csrf_token %}
+                {% if message %}
+                    {{ message }}<br><br>
+                {% endif %}
+                <input type="text" placeholder="Логин" name="login"><br>
+                <input type="password" placeholder="Пароль" name="password"><br>
+                <input type="submit" value="Войти" id="login_button">
+        </form>
+    </div>
+    <div class="materials">
+        <p>Доступные материалы</p>
+        <ul>
+            {% for material in material_list%}
+                <li><a href="{{material.id_material}}">{{material}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock content %}

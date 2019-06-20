@@ -41,3 +41,13 @@ form {
     flex-direction: column;
     align-items: center;
 }
+
+div.materials {
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    background-color: antiquewhite;
+    border-right: 2px dashed brown;
+    padding: 15px;
+}

@@ -22,9 +22,13 @@ class PracticeForGroupAdmin(admin.ModelAdmin):
     search_fields = ['id_practice','id_group','date_of_sub']
     list_filer = ['id_practice','id_group','date_of_sub']
 
+class MaterialAdmin(admin.ModelAdmin):
+    list_display = ('name','id_material','path')
+
 admin.site.register(Theme,ThemeAdmin)
 admin.site.register(User,UserAdmin)
 admin.site.register(Group,GroupAdmin)
 admin.site.register(Practice,PracticeAdmin)
 admin.site.register(PracticeForGroup,PracticeForGroupAdmin)
+admin.site.register(Material,MaterialAdmin)
 # Register your models here.

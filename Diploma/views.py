@@ -22,6 +22,11 @@ def login(request):
     if 'user' in request.session:
         return redirect('Diploma:profile')
 
+    material_list = Material.objects.all().order_by('name')
+    context = {
+        'material_list':material_list
+    }
+
     # check for method then check other things
     if request.method == 'POST':
         login_string = request.POST.get('login')
@@ -32,7 +37,8 @@ def login(request):
             try:
                 user = User.objects.get(login__regex=login_string)
             except ObjectDoesNotExist:
-                return render(request, 'login.html',{'message':'Логин или пароль не существуют'})
+                context ['message'] = 'Логин или пароль не существуют'
+                return render(request, 'login.html',context)
             
             hashedpw = bcrypt.hashpw(password.encode(),user.password.encode())
             # check hashed password for user
@@ -40,12 +46,14 @@ def login(request):
                 request.session['user'] = user
                 request.session.set_expiry(0)
                 return redirect('Diploma:profile',)
-            else:    
-                return render(request, 'login.html',{'message':'Логин или пароль не существуют'})
+            else:
+                context ['message'] = 'Логин или пароль не существуют'
+                return render(request, 'login.html',context)
         else:
-            return render(request, 'login.html',{'message':'Логин или пароль не введен'})
+            context ['message'] = 'Логин или пароль не введен'
+            return render(request, 'login.html',context)
         
-    return render(request, 'login.html')
+    return render(request, 'login.html', context)
 
 def check_practice_action(request):
     if 'rename' in request.POST:
@@ -166,9 +174,12 @@ def fill_students_interface(request):
 
     print(attached_practices)
 
+    material_list = Material.objects.all().order_by('name')
+
     context = {
         'profile':user,
         'attached_practices':attached_practices,
+        'material_list':material_list
         }
 
     return render(request,'profile_student.html',context)
@@ -298,7 +309,7 @@ def create_file(post):
             del_path = prac_dir_abs_path.joinpath(i.name)
             del_path.unlink()
 
-    practice = Practice(name=practice_name,path='practice/')
+    practice = Practice(name=practice_name,path='practics/')
     practice.save()
 
     return practice.id_practice
@@ -400,12 +411,12 @@ def show_practice(request, id_practice):
     user = request.session['user']
     if (user.status != 'teacher') and ('from_create' in request.GET):
         raise PermissionDenied
-    if 'from_create' in request.GET:
-        check = check_show_action(request, id_practice)
-        if check == 'profile':
-            return redirect('Diploma:profile')
-        elif check == 'create_practice':
-            return redirect('Diploma:create_practice')
+    
+    check = check_show_action(request, id_practice)
+    if check == 'profile':
+        return redirect('Diploma:profile')
+    elif check == 'create_practice':
+        return redirect('Diploma:create_practice')
 
     try:
         practice = Practice.objects.get(pk=id_practice)
@@ -422,6 +433,15 @@ def show_practice(request, id_practice):
     except ObjectDoesNotExist:
         return HttpResponseNotFound()
     
-def show_material(request,id_practice):
-    
-    return
+def show_material(request,id_material):
+    try:
+        material = Material.objects.get(pk=id_material)
+        material = material.name + '.pdf'
+        context = {
+            'material_name':material
+        }
+        print (context)
+        return render(request,'show_material.html', context)
+    except ObjectDoesNotExist as ex:
+        print(ex);
+        return HttpResponseNotFound

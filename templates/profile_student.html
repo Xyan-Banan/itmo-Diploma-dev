@@ -7,6 +7,14 @@
 {% endblock group %}
 
 {% block interface %}
+    <div class="materials">
+        <p>Доступные материалы</p>
+        <ul>
+            {% for material in material_list%}
+                <li><a href="{{material.id_material}}">{{material}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
     <div class="practices">
         {% if attached_practices%}
             <p class="group_attachment">Ваши практики</p>

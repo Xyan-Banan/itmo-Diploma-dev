@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block header %}
+    <title>Просмотр материала</title>
+    <link rel="stylesheet" href="{% static "/css/show_practice.css" %}">
+{% endblock header %}
+
+{% block content %}
+    <form method="post" action="/login/" class="back_btn_form">{% csrf_token %}
+        <button class="link back_btn">Назад</button>
+    </form>
+    <embed src="/static/materials/{{ material_name }}" width="1000" height="750" type="application/pdf">
+{% endblock content %}  

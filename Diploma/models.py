@@ -21,6 +21,19 @@ class Group(models.Model):
         db_table = 'group'
 
 
+class Material(models.Model):
+    id_material = models.AutoField(primary_key=True)
+    name = models.CharField(unique=True, max_length=45)
+    path = models.CharField(max_length=45)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        managed = False
+        db_table = 'material'
+
+
 class Practice(models.Model):
     id_practice = models.AutoField(primary_key=True)
     name = models.CharField(unique=True, max_length=100)
