@@ -443,5 +443,5 @@ def show_material(request,id_material):
         print (context)
         return render(request,'show_material.html', context)
     except ObjectDoesNotExist as ex:
-        print(ex);
+        print(ex)
         return HttpResponseNotFound

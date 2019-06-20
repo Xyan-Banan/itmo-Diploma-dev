@@ -1,5 +1,5 @@
 from django.contrib import admin
-from Diploma.models import *
+from Diploma.models import Theme, User, Group, Practice, PracticeForGroup, Material
 
 class ThemeAdmin(admin.ModelAdmin):
     list_display = ('name','path')
