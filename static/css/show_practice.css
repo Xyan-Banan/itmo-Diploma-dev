@@ -1,30 +1,32 @@
+body {
+    align-items: stretch;
+}
+
 .main_box {
     flex-direction: row;
     align-items: stretch;
 }
 
-form {
-    margin: 0px 20px;
-    width: 100%;
-}
-
 .link {
-    margin: 10px 0px;
+    margin: 7px 0px;
 }
 
-.buttons {
+div.all_buttons {
+    margin-right: 15px;
+}
+
+form.buttons {
     flex-direction: column;
-}
-
-body {
     align-items: stretch;
-}
-
-.back_btn_form {
-    justify-content: flex-end;
+    /* padding: 0px 20px; */
+    /* width: 100%; */
 }
 
 .manage {
     align-items: stretch;
     justify-content: stretch;
+}
+
+.back_btn_form {
+    justify-content: flex-end;
 }

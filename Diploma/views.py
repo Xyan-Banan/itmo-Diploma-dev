@@ -99,7 +99,7 @@ def check_practice_action(request):
             print(format(ex))
             return 'Ошибка отвязки практики'
 
-def fill_teacher_interface(request): 
+def fill_teachers_interface(request): 
     user = request.session['user']
     groups_list = Group.objects.filter(teacher=user.id_user).order_by('number')
     # check and perform database changes
@@ -107,6 +107,9 @@ def fill_teacher_interface(request):
     # get all practices and list of connections practices with group
     practice_for_groups_list = PracticeForGroup.objects.all()
     attached_practices = dict(practice_for_groups_list.values_list('id_practice','date_of_sub'))
+    attached_practices = {str(i):attached_practices[i].strftime('%d.%m.%Y') for i in attached_practices if attached_practices[i] is not None}
+    print(attached_practices)
+    print(attached_practices.items())
     practice_list = Practice.objects.all().order_by('name')
     if 'get_practices' in request.GET:
         group_num = request.GET['get_practices']
@@ -124,6 +127,10 @@ def fill_teacher_interface(request):
             group_num = 'Непривязанные практики'
     else:
         group_num = 'Все практики'
+
+    practice_list = dict(practice_list.values_list('id_practice','name'))
+    practice_list = {str(i):practice_list[i].replace('_',' ') for i in practice_list}
+    print(practice_list)
     # setting minimum date to submit the practice
     now = datetime.datetime.now() + datetime.timedelta(days=1)
     context = {
@@ -138,6 +145,25 @@ def fill_teacher_interface(request):
         context['alert_message'] = alert_message
     return render(request, 'profile_teacher.html', context)
 
+def fill_students_interface(request):
+    user = request.session['user']
+
+    connections = dict(PracticeForGroup.objects.filter(id_group=user.group).order_by('date_of_sub').values_list('id_practice','date_of_sub'))
+    connections = {conn:connections[conn].strftime('%d.%m.%Y') for conn in connections}
+    
+    attached_practices = dict(Practice.objects.filter(id_practice__in=connections).values_list('id_practice','name'))
+    for i in attached_practices:
+        attached_practices[i] = {'name':attached_practices[i].replace('_',' '),'date_of_sub':connections[i]}
+
+    print(attached_practices)
+
+    context = {
+        'profile':user,
+        'attached_practices':attached_practices,
+        }
+
+    return render(request,'profile_student.html',context)
+
 def profile(request):
     if 'user' not in request.session:
         return redirect('Diploma:login')
@@ -147,23 +173,11 @@ def profile(request):
         return redirect('Diploma:profile')
 
     user = request.session['user']
-    context = {
-        'profile':user,
-        }
-    if user.status == 'teacher':
-        return fill_teacher_interface(request)
     
-    connections = PracticeForGroup.objects.filter(id_group=user.group).order_by('date_of_sub')
-    print(connections)
-    connections = connections.values_list('id_practice',flat=True)
-    print(connections)
-    attached_practices = Practice.objects.filter(id_practice__in=connections)
-    print(attached_practices)
-
-    context['attached_practices'] = attached_practices
-
-    return render(request,'profile_student.html',context)
-
+    if user.status == 'teacher':
+        return fill_teachers_interface(request)
+    
+    return fill_students_interface(request)
 
 def init_task_array(dir_path):
     "returns array of file names in dir_path"
@@ -186,11 +200,11 @@ def init_tasks_in_themes(themes_list):
     
     return tasks_in_themes
 
-def create_theme_list(request):
+def create_theme_list(post):
     
     themes_list = {}
     
-    for key,value in request.POST.items():
+    for key,value in post.items():
         # add themes into the list
         if key[:5] == 'theme':
             # trying to conver value to task quantity
@@ -214,13 +228,13 @@ def create_theme_list(request):
         return -1
     return themes_list
 
-def createfile(request):
+def create_file(post):
 
-    themes_list = create_theme_list(request)
+    themes_list = create_theme_list(post)
     if themes_list == -1:
         return -1
 
-    practice_name = request.POST['practice_name']
+    practice_name = post['practice_name']
     practice_name = practice_name.replace(' ','_')
     prac_dir_abs_path = Path(finders.find('practics/'))
     tmp_prac_abs_path = prac_dir_abs_path.joinpath('tmp_' + practice_name + '.tex')
@@ -229,7 +243,7 @@ def createfile(request):
                             \\usepackage[utf8]{inputenc}\n
                             \\usepackage[russian]{babel}\n\n
                             \\begin{document}\n\n''')
-    variants_quant = int(request.POST['variants_quantity'])
+    variants_quant = int(post['variants_quantity'])
     
     tasks_in_themes = init_tasks_in_themes(themes_list)
     selected_tasks = {}
@@ -280,20 +294,20 @@ def createfile(request):
 
     return practice.id_practice
 
-def checkformthemes(request):
+def check_form_themes(post):
     
-    if ('practice_name' not in request.POST) or (request.POST['practice_name'] == '') or (request.POST['practice_name'][:3] == 'tmp'):
+    if ('practice_name' not in post) or (post['practice_name'] == '') or (post['practice_name'][:3] == 'tmp'):
         return {'message':'Не введено или неверно введено название практики'}
 
-    practice_name = request.POST['practice_name']
+    practice_name = post['practice_name']
     practice_name = practice_name.replace(' ','_')
 
     try:
         Practice.objects.get(name=practice_name)
     except ObjectDoesNotExist:
         # check if variants quantity exist and more then zero
-        if ('variants_quantity' in request.POST) and (request.POST['variants_quantity'] != ''):
-            if int(request.POST['variants_quantity']) > 0:
+        if ('variants_quantity' in post) and (post['variants_quantity'] != ''):
+            if int(post['variants_quantity']) > 0:
                 return 1
             else:
                 context = {'message':'Не введено или введено неверно количество вариантов'}
@@ -303,7 +317,7 @@ def checkformthemes(request):
     return {'message':'Практика с таким именем уже существует'}
 
 def create_practice(request):
-
+    
     if 'user' not in request.session:
         return redirect('Diploma:login')
     
@@ -316,18 +330,20 @@ def create_practice(request):
         'themes_list':themes_list
     }
 
+    post = request.POST
+
     # check for clicked submit button
-    if 'submit' in request.POST:
-        check = checkformthemes(request)
+    if 'submit' in post:
+        check = check_form_themes(post)
         if check != 1:
             context['message'] = check['message']
         else:
-            practice_id = createfile(request)
+            practice_id = create_file(post)
             if practice_id == -1:
                 context['message'] ='Не выбрано ни одной темы или неверно введено количество заданий'
             else:
+                request.session['post'] = request.POST
                 return redirect('/profile/show_practice/' + str(practice_id) + '?from_create=true')
-                #reverse('Diploma:show_practice') ,kwargs={'practice_id':str(practice_id)}) #,'from_create':'true'}))
     
     return render(request, 'create_practice.html',context)
 

@@ -1,15 +1,16 @@
 {% extends "profile.html" %}
 {%load static%}
+{%load Diploma_extras%}
 
 {% block interface %}
     <div class="buttons">
         <form>
             <select class="link" name="get_practices">
                 {% if groups_list %}
-                    <option onclick="location.reload()">Непривязанные</option>
-                    <option onclick="location.reload()">Все</option>
+                    <option>Все</option>
+                    <option>Непривязанные</option>
                     {% for group in groups_list %}
-                        <option><div onclick="location.reload()">{{ group }}</div></option>
+                        <option>{{ group }}</option>
                     {% endfor %}
                 {%else%}
                     <option>Вы не ведете ни у одной группы</option>
@@ -26,17 +27,31 @@
         {%if practice_list%}
             <p class="group_attachment">{{group_attachment}}</p>
             <table>
-                {% for practice in practice_list %}
+                <th>Название практики</th>
+                <th>Дата сдачи</th>
+                <th>Управление практиками</th>
+                {% for id_practice,name in practice_list.items %}
                     <tr>
-                        <td class="practice_name"><a href="./show_practice/{{practice.id_practice}}" id="{{practice.id_practice}}">{{practice.name}}</td>
+                        <td class="practice_name"><a href="./show_practice/{{id_practice}}" id="{{id_practice}}">{{name}}</td>
+                        <td class='date_of_sub'>
+                            {% if id_practice in attached_practices %}
+                                {%if attached_practices|dict_item:id_practice%}
+                                    {{attached_practices|dict_item:id_practice}}
+                                {% else %}
+                                    Не указана
+                                {% endif %}
+                            {% else %}
+                                Практика не привязана
+                            {% endif %}
+                        </td>
                         <td>
                             <form method="post" class="buttons">{% csrf_token %}
-                                {% if practice.id_practice in attached_practices%}
+                                {% if id_practice in attached_practices%}
                                     <div class="unattach rename_remove">
-                                        <button class="link manage" onclick="unattach({{practice.id_practice}},this)">Отвязать</button>
+                                        <button class="link manage" onclick="unattach({{id_practice}},this)">Отвязать</button>
                                 {%else%}
                                     <div class="attach">
-                                        <button class="link manage" onclick="attach({{practice.id_practice}},this)">Привязать</button>
+                                        <button class="link manage" onclick="attach({{id_practice}},this)">Привязать</button>
                                         <select class="link manage">
                                             {% if groups_list %}
                                                 <option>Группа</option>
@@ -51,8 +66,8 @@
                                     </div>
                                     <div class="rename_remove">
                                 {%endif%}
-                                        <button class="link manage" onclick="rename({{practice.id_practice}},this)">Переименовать</button>
-                                        <button class="link manage" onclick="remove({{practice.id_practice}},this)">Удалить</button>
+                                        <button class="link manage" onclick="rename({{id_practice}},this)">Переименовать</button>
+                                        <button class="link manage" onclick="remove({{id_practice}},this)">Удалить</button>
                                     </div>
                             </form>    
                         </td>

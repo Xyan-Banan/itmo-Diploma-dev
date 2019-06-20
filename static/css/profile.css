@@ -70,6 +70,11 @@ table {
     
 }
 
+th {
+    padding: 0px 15px;
+    text-align: center;
+}
+
 td {
     border: 1px solid black;
     padding: 0px;
@@ -79,11 +84,15 @@ td.practice_name {
     font-size: 20px;
 }
 
+td.date_of_sub {
+    text-align: center;
+    padding: 0px 10px;
+}
+
 form.buttons {
     margin: 0px;
     padding: 0px;
     flex-direction: column;
-    align-items: stretch;
 }
 
 button.manage, select.manage, input.manage {

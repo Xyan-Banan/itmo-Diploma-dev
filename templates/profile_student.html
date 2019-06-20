@@ -11,9 +11,12 @@
         {% if attached_practices%}
             <p class="group_attachment">Ваши практики</p>
             <table>
-                {% for practice in attached_practices %}
+                <th>Навание практики</th>
+                <th>Дата сдачи</th>
+                {% for id_practice,pr_info in attached_practices.items %}
                     <tr>
-                        <td class="practice_name"><a href="./show_practice/{{practice.id_practice}}" id="{{practice.id_practice}}">{{practice.name}}</td>
+                        <td class="practice_name"><a href="./show_practice/{{id_practice}}" id="{{id_practice}}">{{pr_info.name}}</td>
+                        <td class="date_of_sub">{{pr_info.date_of_sub}}</td>
                     </tr>
                 {% endfor %}
             </table>

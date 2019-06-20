@@ -1,5 +1,5 @@
 from django.contrib import admin
-from Diploma.models import Theme,User,Group,Practice
+from Diploma.models import *
 
 class ThemeAdmin(admin.ModelAdmin):
     list_display = ('name','path')
@@ -17,8 +17,14 @@ class GroupAdmin(admin.ModelAdmin):
 class PracticeAdmin(admin.ModelAdmin):
     list_display = ('name','id_practice')
 
+class PracticeForGroupAdmin(admin.ModelAdmin):
+    list_display = ('id_practice','id_group','date_of_sub')
+    search_fields = ['id_practice','id_group','date_of_sub']
+    list_filer = ['id_practice','id_group','date_of_sub']
+
 admin.site.register(Theme,ThemeAdmin)
 admin.site.register(User,UserAdmin)
 admin.site.register(Group,GroupAdmin)
 admin.site.register(Practice,PracticeAdmin)
+admin.site.register(PracticeForGroup,PracticeForGroupAdmin)
 # Register your models here.
