@@ -4,6 +4,7 @@
 {% block header %}
     <title>Просмотр практики</title>
     <link rel="stylesheet" href="{% static "/css/show_practice.css" %}">
+    <script src="{% static "/js/show_practice.js" %}" defer></script>
 {% endblock header %}
 
 {% block content %}
@@ -11,31 +12,34 @@
         <div class="manage">
         {% if request.GET.from_create %}
             <form method="post" class="buttons">{% csrf_token %}
-                <input type="submit" class="link" value="Сохранить практику">
-                <button type="submit" class="link" >Сгенерировать файл заново<br>(с теми же параметрами)</button>
-                <button type="submit" class="link" >Сгенерировать с другими<br>параметрами</button>
-                {% if group_list %}
-                    <select>
-                        {% for group in group_list %}
-                            <option>{{ group.name }}</option>
-                        {% endfor %}
-                    </select>
-                    <input type="submit" class="link" value="Привязать задания к группе">
-                {% endif %}
+                <button class="link" name="save" value="true">Сохранить практику</button>
+                <button class="link" name="regen" value="this_param">Сгенерировать файл заново<br>(с теми же параметрами)</button>
+                <button class="link" name="regen" value="other_param">Сгенерировать с другими<br>параметрами</button>
+                
             </form>
         {% endif %}
         </div>
-        <div>
-            <form method="post" action="/profile/" class="back_btn_form">{% csrf_token %}
-                <button type="submit" class="link back_btn" name="back_bth">
-                    {% if 'from_create' in request.GET %}
-                        Отмена
-                    {% else %}
-                        Назад к профилю
-                    {% endif %}
-                </button>
+        {% if group_list %}
+            <form method="post" class="buttons"> {% csrf_token %}
+                <button class="link" onclick="attach('{{practice_name}}',this)">Привязать практику к группе </button>
+                <select class="link" id="group">
+                    <option>Группа</option>
+                    {% for group in group_list %}
+                        <option>{{ group.number }}</option>
+                    {% endfor %}
+                </select>
+                <input type=date class="link manage" min="{{today}}" id="date_of_sub">
             </form>
-        </div>
+        {% endif %}
+        <form method="post" class="back_btn_form">{% csrf_token %}
+            <button name="cancel" value="true" class="link back_btn">
+                {% if 'from_create' in request.GET %}
+                    Отмена
+                {% else %}
+                    Назад к профилю
+                {% endif %}
+            </button>
+        </form>
     </div>
     <embed src="/static/practics/{{ practice_name }}" width="1000" height="750" type="application/pdf">
 {% endblock content %}  

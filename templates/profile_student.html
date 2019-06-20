@@ -16,7 +16,11 @@
                 {% for id_practice,pr_info in attached_practices.items %}
                     <tr>
                         <td class="practice_name"><a href="./show_practice/{{id_practice}}" id="{{id_practice}}">{{pr_info.name}}</td>
-                        <td class="date_of_sub">{{pr_info.date_of_sub}}</td>
+                        {% if pr_info.date_of_sub%}
+                            <td class="date_of_sub">{{pr_info.date_of_sub}}</td>
+                        {%else%}
+                            <td class="date_of_sub">Не указана</td>
+                        {%endif%}
                     </tr>
                 {% endfor %}
             </table>

@@ -10,13 +10,12 @@ from django.contrib.staticfiles import finders
 
 import bcrypt
 
-from Diploma.models             import User, Theme, Group, Practice, PracticeForGroup
+from Diploma.models             import User, Theme, Group, Practice, PracticeForGroup, Material
 
 def index(request):
     if 'user' in request.session:
         return redirect('Diploma:profile')
     return redirect('Diploma:login')
-
 
 def login(request):
 
@@ -106,8 +105,13 @@ def fill_teachers_interface(request):
     alert_message = check_practice_action(request)
     # get all practices and list of connections practices with group
     practice_for_groups_list = PracticeForGroup.objects.all()
+    print(practice_for_groups_list)
     attached_practices = dict(practice_for_groups_list.values_list('id_practice','date_of_sub'))
-    attached_practices = {str(i):attached_practices[i].strftime('%d.%m.%Y') for i in attached_practices if attached_practices[i] is not None}
+    for i in attached_practices:
+        if attached_practices[i] is not None:
+            attached_practices[i] = attached_practices[i].strftime('%d.%m.%Y')
+        else:
+            attached_practices[i] = ''
     print(attached_practices)
     print(attached_practices.items())
     practice_list = Practice.objects.all().order_by('name')
@@ -129,17 +133,17 @@ def fill_teachers_interface(request):
         group_num = 'Все практики'
 
     practice_list = dict(practice_list.values_list('id_practice','name'))
-    practice_list = {str(i):practice_list[i].replace('_',' ') for i in practice_list}
+    practice_list = {i:practice_list[i].replace('_',' ') for i in practice_list}
     print(practice_list)
     # setting minimum date to submit the practice
-    now = datetime.datetime.now() + datetime.timedelta(days=1)
+    now = str(datetime.datetime.now() + datetime.timedelta(days=1))[:10]
     context = {
         'profile':user,
         'group_attachment':group_num,
         'groups_list':groups_list,
         'practice_list':practice_list,
         'attached_practices':attached_practices,
-        'today':str(now)[:10]
+        'today':now
     }
     if alert_message:
         context['alert_message'] = alert_message
@@ -149,7 +153,12 @@ def fill_students_interface(request):
     user = request.session['user']
 
     connections = dict(PracticeForGroup.objects.filter(id_group=user.group).order_by('date_of_sub').values_list('id_practice','date_of_sub'))
-    connections = {conn:connections[conn].strftime('%d.%m.%Y') for conn in connections}
+    print (connections)
+    for conn in connections:
+        if connections[conn] is not None:
+            connections[conn] = connections[conn].strftime('%d.%m.%Y') 
+        else:
+            connections[conn] = ''
     
     attached_practices = dict(Practice.objects.filter(id_practice__in=connections).values_list('id_practice','name'))
     for i in attached_practices:
@@ -347,7 +356,43 @@ def create_practice(request):
     
     return render(request, 'create_practice.html',context)
 
-def show_practice(request, practice_id):
+def check_show_action(request, id_practice):
+    if 'save' in request.POST:
+        del request.session['post']
+        return 'profile'
+    
+    if 'cancel' in request.POST:
+        if 'from_create' in request.GET:
+            Practice.objects.get(pk=id_practice).delete()
+            del request.session['post']
+        return 'profile'
+
+    if 'regen' in request.POST:
+        Practice.objects.get(pk=id_practice).delete()
+        if request.POST['regen'] == 'this_param':
+            new_id = create_file(request.session['post'])
+            return new_id
+        else:
+            del request.session['post']
+            return 'create_practice'
+
+    if 'attach' in request.POST:
+        attach = request.POST['attach'].split('.')
+        try:
+            practice = Practice.objects.get(pk=id_practice)
+            group = Group.objects.get(number=attach[0])
+            date_of_sub = attach[1] if len(attach) > 1 else ''
+            if date_of_sub:
+                pr_for_gr = PracticeForGroup(id_practice=practice,id_group=group,date_of_sub=date_of_sub)
+            else:
+                pr_for_gr = PracticeForGroup(id_practice=practice,id_group=group)
+            pr_for_gr.save()
+            return 'profile'
+        except ObjectDoesNotExist as ex:
+            print(format(ex))
+            return 'Ошибка привязки группы'
+
+def show_practice(request, id_practice):
     
     if 'user' not in request.session:
         return redirect('Diploma:login')
@@ -355,14 +400,28 @@ def show_practice(request, practice_id):
     user = request.session['user']
     if (user.status != 'teacher') and ('from_create' in request.GET):
         raise PermissionDenied
+    if 'from_create' in request.GET:
+        check = check_show_action(request, id_practice)
+        if check == 'profile':
+            return redirect('Diploma:profile')
+        elif check == 'create_practice':
+            return redirect('Diploma:create_practice')
 
     try:
-        practice = Practice.objects.get(pk=practice_id)
+        practice = Practice.objects.get(pk=id_practice)
+        groups_list = Group.objects.filter(teacher=user.id_user).order_by('number')
+        now = str(datetime.datetime.now() + datetime.timedelta(days=1))[:10]
+        
         context = {
-            'practice_name':practice.name + '.pdf'
+            'practice_name':practice.name + '.pdf',
+            'group_list':groups_list,
+            'today':now
         }
         
         return render(request, 'show_practice.html',context)
     except ObjectDoesNotExist:
         return HttpResponseNotFound()
     
+def show_material(request,id_practice):
+    
+    return
